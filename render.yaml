@@ -2,12 +2,13 @@ services:
   - type: web
     name: centro-medico-api
     runtime: python
+    pythonVersion: "3.11.0"
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:api --host 0.0.0.0 --port $PORT
     envVars:
-      - key: DATABASE_URL
-        sync: false
       - key: GROQ_API_KEY
+        sync: false
+      - key: DATABASE_URL
         sync: false
       - key: SUPABASE_URL
         sync: false
