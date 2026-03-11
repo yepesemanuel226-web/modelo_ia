@@ -15,4 +15,6 @@ class Usuario(Base):
     activo         = Column(Boolean, default=True)
     fecha_registro = Column(DateTime, server_default=func.now())
 
-    conversaciones = relationship("Conversacion", back_populates="usuario", cascade="all, delete")
+    conversaciones   = relationship("Conversacion", back_populates="usuario", cascade="all, delete")
+    historial_clinico = relationship("HistorialClinico", back_populates="usuario", cascade="all, delete")
+    historial_paciente = relationship("HistorialPaciente", back_populates="usuario", cascade="all, delete")

@@ -14,5 +14,5 @@ class Conversacion(Base):
     inicio     = Column(DateTime, server_default=func.now())
     fin        = Column(DateTime, nullable=True)
 
-    usuario  = relationship("Usuario", back_populates="conversaciones")
-    mensajes = relationship("Mensaje", back_populates="conversacion", cascade="all, delete")
+    usuario      = relationship("Usuario", back_populates="conversaciones")
+    mensajes     = relationship("Mensaje", back_populates="conversacion", cascade="all, delete")
