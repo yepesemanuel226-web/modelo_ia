@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from uuid import UUID
 
 
 # ──────────────────────────────────────────────
@@ -14,13 +15,13 @@ class CitaCrear(BaseModel):
     notas:       Optional[str] = None
 
 class CitaActualizar(BaseModel):
-    estado: Optional[str] = None   # pendiente | confirmada | completada | cancelada
+    estado: Optional[str] = None
     notas:  Optional[str] = None
 
 class CitaRespuesta(BaseModel):
-    id:          str
-    paciente_id: str
-    medico_id:   str
+    id:          UUID
+    paciente_id: UUID
+    medico_id:   UUID
     fecha_cita:  datetime
     motivo:      str
     estado:      str
@@ -41,12 +42,12 @@ class HistorialClinicoCrear(BaseModel):
     descripcion: str
 
 class HistorialClinicoRespuesta(BaseModel):
-    id:          str
-    usuario_id:  str
-    medico_id:   Optional[str]
-    titulo:      str
-    descripcion: str
-    fecha:       datetime
+    id:          UUID
+    usuario_id:  UUID
+    medico_id:   Optional[UUID]
+    titulo:      Optional[str]
+    descripcion: Optional[str]
+    fecha:       Optional[datetime]
 
     class Config:
         from_attributes = True
@@ -62,9 +63,9 @@ class DiagnosticoCrear(BaseModel):
     confianza:       Optional[float] = None
 
 class DiagnosticoRespuesta(BaseModel):
-    id:              str
-    conversacion_id: str
-    usuario_id:      str
+    id:              UUID
+    conversacion_id: UUID
+    usuario_id:      UUID
     contenido:       str
     confianza:       Optional[float]
     created_at:      datetime
@@ -88,9 +89,9 @@ class AnalisisPNLCrear(BaseModel):
     idioma_detectado:  Optional[str] = None
 
 class AnalisisPNLRespuesta(BaseModel):
-    id:                str
-    conversacion_id:   Optional[str]
-    historial_id:      Optional[str]
+    id:                UUID
+    conversacion_id:   Optional[UUID]
+    historial_id:      Optional[UUID]
     texto_original:    str
     resumen:           Optional[str]
     entidades:         Optional[dict]
