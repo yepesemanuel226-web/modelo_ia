@@ -10,7 +10,7 @@ api = FastAPI(
     version="2.0.0"
 )
 
-# CORS — permite conexiones desde el cliente Java de escritorio
+# CORS — permite conexiones desde el cliente Python de escritorio
 api.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,6 +28,9 @@ api.include_router(citas.router)
 api.include_router(historial_clinico.router)
 api.include_router(diagnosticos.router)
 api.include_router(analisis_pnl.router)
+
+# Alias para compatibilidad con el cliente de escritorio
+api.include_router(historial_clinico.router, prefix="/historial", tags=["Historial (alias)"])
 
 
 @api.get("/", tags=["Health"])
