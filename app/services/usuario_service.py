@@ -6,8 +6,6 @@ from uuid import UUID
 
 
 class UsuarioService:
-    """Gestión de usuarios (pacientes y médicos)."""
-
     def __init__(self, db: Session):
         self.db = db
 
@@ -20,7 +18,9 @@ class UsuarioService:
         usuario = Usuario(
             nombre=datos.nombre,
             email=datos.email,
-            rol=datos.rol
+            rol=datos.rol,
+            username=datos.username,
+            password=datos.password,
         )
         self.db.add(usuario)
         self.db.commit()
@@ -38,3 +38,12 @@ class UsuarioService:
 
     def buscar_por_email(self, email: str) -> Usuario:
         return self.db.query(Usuario).filter(Usuario.email == email).first()
+
+    def login(self, username: str, password: str) -> Usuario:
+        usuario = self.db.query(Usuario).filter(
+            Usuario.username == username,
+            Usuario.password == password
+        ).first()
+        if not usuario:
+            raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+        return usuario

@@ -4,9 +4,22 @@ from uuid import UUID
 
 from app.database import get_db
 from app.schemas import UsuarioCrear, UsuarioRespuesta
+from app.schemas.usuario import LoginRequest
 from app.services import UsuarioService
 
 router = APIRouter(prefix="/usuarios", tags=["Usuarios"])
+
+
+@router.post("/registro", response_model=UsuarioRespuesta, status_code=201)
+def registrar_usuario(datos: UsuarioCrear, db: Session = Depends(get_db)):
+    """Registra un nuevo usuario con username y password."""
+    return UsuarioService(db).crear(datos)
+
+
+@router.post("/login", response_model=UsuarioRespuesta)
+def login_usuario(datos: LoginRequest, db: Session = Depends(get_db)):
+    """Autentica un usuario con username y password."""
+    return UsuarioService(db).login(datos.username, datos.password)
 
 
 @router.post("/", response_model=UsuarioRespuesta, status_code=201)
